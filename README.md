@@ -1,10 +1,13 @@
 # setupR200-TK1
-Workarounds for adding the Intel Realsense R200 camera to the NVIDIA Jetson TK1 Development Kit
+Workarounds for adding the Intel Realsense R200 camera to the NVIDIA Jetson TK1 Development Kit.
+
 
 There are a couple of issues running the Intel Realsense R200 camera with a NVIDIA Jetson TK1 Dev Kit
 First, after booting the machine with the camera plugged in, the camera will timeout when data is requested.
 As a workaround, create a file named /tmp/reset-realsense when the TK1 boots. One example for creating the file:
+
 $ touch /tmp/reset-realsense
+
 Call r200JTK1Setup(), which will then attempt to reset the camera in this case. For best results, the camera
 should be directly connected to the Jetson USB 3.0 A connector, as different USB 3.0 hubs (even powered ones) may cause issues.
 

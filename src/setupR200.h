@@ -1,9 +1,18 @@
 // License: MIT. See LICENSE file in root directory.
 // Copyright(c) 2016 JetsonHacks. All Rights Reserved.
-#include <libusb.h>
 
 // Workarounds for Intel Realsense R200 on NVIDIA Jetson TK1
 // Call r200JTK1Setup on program startup
+
+
+#ifndef SETUPR200_H
+#define SETUPR200_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <libusb.h>
 
 void resetDevice ( void ) ;
 void clearInterfaceHalt ( libusb_device_handle *dev_handle, int bInterfaceNumber, int bEndpointAddress) ;
@@ -26,3 +35,9 @@ void videoStreamClearHalts ( void ) ;
 // in situations where replugging the camera after each use is not practical.
 //
 void r200JTK1Setup ( void ) ;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // !def(SETUPR200_H)

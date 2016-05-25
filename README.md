@@ -21,6 +21,8 @@ NOTE: Calling videoStreamClearHalts() after calling resetDevice() will cause the
 providing a video stream. resetDevice() should only be called the first time the camera is used after booting. Physically 
 unplugging/replugging the device obviates the need for resetDevice().
 
+In the librealsense library, the files may be placed in the 'src' folder.
+
 Note that neither of these workarounds can be considered robust (or work 100% of the time), but they may prove helpful
 in situations where replugging the camera after each use is not practical.
 

@@ -5,6 +5,9 @@
 // Workarounds for Intel Realsense R200 on NVIDIA Jetson TK1
 
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "setupR200.h"
 
 #define VENDOR_ID   0x8086
 #define PRODUCT_ID  0x0a80

@@ -85,7 +85,7 @@ void clearInterfaceHalt ( libusb_device_handle *dev_handle, int bInterfaceNumber
 // Here we issue libusb_clear_halt to the video streams to kick start them. libusb_reset_device
 // must *NOT* be called prior to this, otherwise the streams will timeout when started
 //
-void videoStreamClearHalts ( void ) {
+void videoStreamsClearHalts ( void ) {
     libusb_context          *context = NULL ;
     libusb_device_handle    *dev_handle = NULL ;
     libusb_device           **devs ;
@@ -115,23 +115,24 @@ void videoStreamClearHalts ( void ) {
 }
 
 // 
-// There are a couple of issues running the Intel Realsense R200 camera with a NVIDIA Jetson TK1 Dev Kit
-// First, after booting the machine with the camera plugged in, the camera will timeout when data is requested.
-// As a workaround, create a file named /tmp/reset-realsense when the TK1 boots. This can be done:
+// There are a couple of issues running the Intel Realsense R200 camera with a NVIDIA Jetson Dev Kit
+// First, after booting the machine with the camera plugged in, the camera may timeout when data is requested.
+// As a workaround, create a file named /tmp/reset-realsense when the Jetson boots. This can be done:
 // $ touch /tmp/reset-realsense
 // Call the following routine, which will attempt to reset the camera. For best results, the camera
 // should be directly connected to the Jetson USB 3.0 A connector, as different hubs can cause issues.
+// This issue does not seem to present itself when the camera is plugged directly into the Jetson.
 //
 // The second issue is that after running a program that uses the camera, the second time running the program
 // does not work, typically with error messages having to do with the LIBUSB PIPE having issues. This is probably
 // caused by the camera firmware/libusb/kernel not shutting down the first connection properly.
-// In order to clear the LIBUSB pipe issue,  videoStreamClearHalts may be called.
+// In order to clear the LIBUSB pipe issue,  videoStreamsClearHalts may be called.
 //
 // Note that neither of these workarounds can be considered robust (or work 100% of the time), but they may prove helpful
 // in situations where replugging the camera after each use is not practical.
 //
 
-void r200JTK1Setup ( void ) {
+void r200JetsonSetup ( void ) {
     if( access( "/tmp/reset-realsense", F_OK ) != -1 ) {
         // file exists
         unlink("/tmp/reset-realsense") ;
@@ -139,7 +140,7 @@ void r200JTK1Setup ( void ) {
     } else {
         // file doesn't exist ; means we've already run the program once since reboot
         // Clear interface halts that may have accumulated on video streams
-        videoStreamClearHalts();
+        videoStreamsClearHalts();
     }
 }
 
